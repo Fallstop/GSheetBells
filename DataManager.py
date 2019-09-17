@@ -33,9 +33,10 @@ while True: ##Infinte loop to have always listing for new commands
             data.iloc[DataPos,2] = RingTime 
             print("Data After appalying Commmand")
             print(data)
-            commands = commands.drop(0) ##remove command
+            ##Remove command and save data
+            commands = commands.drop(0)
             print("Commands",commands) 
-            commands.to_csv('Commands.txt', index=False) ## files
+            commands.to_csv('Commands.txt', index=False)
             data.to_csv('BellStorage.csv', index=False,header=False)
         
         elif commands.iloc[0,0] == "Remove": ##Remove bell, 2 segments of data to identify the bell
@@ -52,6 +53,7 @@ while True: ##Infinte loop to have always listing for new commands
                     EixtLoop = True
                 else:
                     i+= 1 ##If not, increment
+            ##Remove command and save data
             commands = commands.drop(0)
             commands.to_csv('Commands.txt', index=False)
             data.to_csv('BellStorage.csv', index=False,header=False)
@@ -59,6 +61,7 @@ while True: ##Infinte loop to have always listing for new commands
         elif commands.iloc[0,0] == "RingNow":
             RingTime = commands.iloc[0,1]
             data.iloc[0,0] = RingTime
+            ##Remove command and save data
             commands = commands.drop(0)
             commands.to_csv('Commands.txt', index=False)
             data.to_csv('BellStorage.csv', index=False,header=False)
@@ -70,10 +73,12 @@ while True: ##Infinte loop to have always listing for new commands
                 data.iloc[0,1] = 0
                 print("Mute Turned off")
                 print(data.iloc[0,1])
+            ##Remove command and save data
             commands = commands.drop(0)
             commands.to_csv('Commands.txt', index=False)
             data.to_csv('BellStorage.csv', index=False,header=False)
         else:
+            ##Remove command, save data and throw exception to restart
             commands = commands.drop(0)
             commands.to_csv('Commands.txt', index=False)
             print("Weird command found")
