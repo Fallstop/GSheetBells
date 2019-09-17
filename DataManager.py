@@ -1,5 +1,6 @@
 import pandas as df
 import numpy as np
+import os
 import time
 data = df.read_csv("BellStorage.csv",header=None) ##File that stores the bell times and dates and other info
 blank =df.read_csv("Blank.csv",header=None) ##Blank, is used to attach to the end of Bell storage when a new line is going to be added
@@ -79,8 +80,16 @@ while True: ##Infinte loop to have always listing for new commands
             data.to_csv('BellStorage.csv', index=False,header=False)
         else:
             ##Remove command, save data and throw exception to restart
-            commands = commands.drop(0)
-            commands.to_csv('Commands.txt', index=False)
+            try: ##Teasting if the file is currupt (eg: "fg,fsdf,sdf,sd,f,s,df,sdf,s,df,sdf" with more inputs than headers will make a exception), BTW this would cause a boot loop befor
+                commands = commands.drop(0)
+                commands.to_csv('Commands.txt', index=False)
+            except: ##If we can't edit command txt, we need to refresh the file
+                print("Cannot write to Commands")
+                CommandFile = open("Commands.txt","w+")
+                CommandFile.write("0,1,2") ##Header info
+                CommandFile.close()
+                print("Command Refreshed")
+                raise Exception("Command file corrupted, Refreshing and restarting")
             print("Weird command found")
             raise Exception("Command not reconised, dropping and restarting")
 
