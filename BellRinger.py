@@ -5,7 +5,7 @@ def GetTime(): ##Function for reciveing
     Time = time.asctime().split() 
     Time = Time[3]
     Time = Time[:-3]
-    print(Time)
+    return(Time)
 def ReadData():
     try:
         print("Read Sucseded")
@@ -14,5 +14,19 @@ def ReadData():
         print("Read failed")
         time.sleep(5)
         ReadData()
+def RingBell(TimeToRingFor):
+    ##TO DO
+    print("Ringing")
+    time.sleep(TimeToRingFor)
+    print("StopRinging")
+def CheckBell(Time,Data):
+    i = 0
+    while i < Data.shape[0]:
+        print("Line:",i,"Time:",Data.iloc[i,0])
+        i += 1
+    for x in Data:
+        print(Data.iloc[x,0])
 Data = ReadData()
-print(Data)
+Time = GetTime()
+Day = 1
+CheckBell(Time,Data)
