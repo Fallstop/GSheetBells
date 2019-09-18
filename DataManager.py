@@ -32,7 +32,8 @@ print(commands)
 NumOfCommands = commands.shape[0] ##How big many commands are there
 print("Num Of Commands: ",NumOfCommands)
 DataPos = 0 ##Where in the data do we write to for the next bell 
-while True: ##Infinte loop to have always listing for new commands
+while True: ##Infinte loop to have always listing for new commands\
+    ##print("Commands Head:",commands.head(3))
     commands = df.read_csv("Commands.txt") ##Check for new commands
     NumOfCommands = commands.shape[0] ##            ^^
     if NumOfCommands != 0: ##If there is a new command
@@ -113,6 +114,7 @@ while True: ##Infinte loop to have always listing for new commands
             
             ##Remove command and save data
             commands = commands.drop(0)
+            print("Commands:",commands)
             commands.to_csv('Commands.txt', index=False)
             data.to_csv('BellStorage.csv', index=False,header=False)
         else:
