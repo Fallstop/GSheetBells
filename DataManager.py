@@ -2,9 +2,31 @@ import pandas as df
 import numpy as np
 import os
 import time
-data = df.read_csv("BellStorage.csv",header=None) ##File that stores the bell times and dates and other info
+
+def FixCommands():
+    print("Cannot write to Commands")
+    CommandFile = open("Commands.txt","w+") ##Wirtes ontop of the txt or generates new
+    CommandFile.write("0,1,2") ##Top of data sheet to declear rows and space for RingNow/Mute
+    CommandFile.close() ##Save
+    print("Command Refreshed")
+    raise Exception("Command file corrupted, Refreshing and restarting")
+
+try: ##Teasting if the data is currupt (eg: no headers or it has been delated), Data is already gone if it dosen't read
+    data = df.read_csv("BellStorage.csv",header=None) ##File that stores the bell times and dates and other info
+except: ##If we can't edit Bell Storage csv, we need to refresh the file
+    print("Cannot write to BellStorage.csv")
+    StorageFile = open("BellStorage.csv","w+") ##Wirtes ontop of the txt or generates new
+    StorageFile.write("0,0,0,0") ##Header info
+    StorageFile.close() ##Save
+    print("Bell Storage Refreshed")
+    raise Exception("Bell Storage csv corrupted, Refreshing and restarting")
+
+try: ##Teasting if the file is currupt (eg: no headers or it has been delated), BTW this would cause a boot loop befor
+    commands = df.read_csv("Commands.txt") ##Instructions for program
+except: ##If we can't edit command txt, we need to refresh the file
+    FixCommands()
 blank =df.read_csv("Blank.csv",header=None) ##Blank, is used to attach to the end of Bell storage when a new line is going to be added
-commands = df.read_csv("Commands.txt") ##Instructions for program
+
 print(data)
 print(commands)
 NumOfCommands = commands.shape[0] ##How big many commands are there
@@ -24,11 +46,14 @@ while True: ##Infinte loop to have always listing for new commands
         print("DataPos:",DataPos)
         
         if commands.iloc[0,0] == "AddNew": ##Add New bell, 3 segments of data to intergrate
-            
-            data = data.append(blank, ignore_index = True)
-            Time =  commands.iloc[0,1]
-            Dates = commands.iloc[0,2]
-            RingTime = commands.iloc[0,3]
+            if data.shape[0] <= DataPos:
+                data = data.append(blank, ignore_index = True)
+            try:
+                Time =  commands.iloc[0,1]
+                Dates = commands.iloc[0,2]
+                RingTime = commands.iloc[0,3]
+            except:
+                FixCommands()
             data.iloc[DataPos,0] = Time
             data.iloc[DataPos,1] = Dates ##Apply to data sheet
             data.iloc[DataPos,2] = RingTime 
@@ -43,8 +68,12 @@ while True: ##Infinte loop to have always listing for new commands
         elif commands.iloc[0,0] == "Remove": ##Remove bell, 2 segments of data to identify the bell
             print("Running Remove command")
             EixtLoop = False
-            Time =  commands.iloc[0,1]
-            Dates = commands.iloc[0,2]
+            try:
+                Time =  commands.iloc[0,1]
+                Dates = commands.iloc[0,2]
+            except:
+                FixCommands()
+            
             i = 1
             while i < len(data) and EixtLoop == False: ##Loop through data
                 if data.iloc[i,0] == Time and data.iloc[i,1] == Dates: ##If found, remove and exit loop
@@ -60,20 +89,28 @@ while True: ##Infinte loop to have always listing for new commands
             data.to_csv('BellStorage.csv', index=False,header=False)
             DataPos -= 1
         elif commands.iloc[0,0] == "RingNow":
-            RingTime = commands.iloc[0,1]
+            try:
+                RingTime = commands.iloc[0,1]
+            except:
+                FixCommands()
+            
             data.iloc[0,0] = RingTime
             ##Remove command and save data
             commands = commands.drop(0)
             commands.to_csv('Commands.txt', index=False)
             data.to_csv('BellStorage.csv', index=False,header=False)
         elif commands.iloc[0,0] == "MuteToggle":
-            if data.iloc[0,1] == "0":
-                data.iloc[0,1] = 1
-                print("Mute Turned on")
-            else:
-                data.iloc[0,1] = 0
-                print("Mute Turned off")
-                print(data.iloc[0,1])
+            try:
+                if data.iloc[0,1] == "0":
+                    data.iloc[0,1] = 1
+                    print("Mute Turned on")
+                else:
+                    data.iloc[0,1] = 0
+                    print("Mute Turned off")
+                    print(data.iloc[0,1])
+            except:
+                FixCommands()
+            
             ##Remove command and save data
             commands = commands.drop(0)
             commands.to_csv('Commands.txt', index=False)
@@ -84,12 +121,7 @@ while True: ##Infinte loop to have always listing for new commands
                 commands = commands.drop(0)
                 commands.to_csv('Commands.txt', index=False)
             except: ##If we can't edit command txt, we need to refresh the file
-                print("Cannot write to Commands")
-                CommandFile = open("Commands.txt","w+")
-                CommandFile.write("0,1,2") ##Header info
-                CommandFile.close()
-                print("Command Refreshed")
-                raise Exception("Command file corrupted, Refreshing and restarting")
+                FixCommands()
             print("Weird command found")
             raise Exception("Command not reconised, dropping and restarting")
 
