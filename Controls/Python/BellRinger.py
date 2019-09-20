@@ -44,13 +44,18 @@ def CheckBell(Time,Day,Data):
                 x += 1
         i += 1
     print("Check Bell function did not find a match in",round((time.time()-BeginTime),5),"secs at ",Time)
+def CheckRingNow():
+    ##TODO
+    print("CheckRingNow is still under develment")
 OldTime = GetTime()
 print(GetDay())
 while True:
+    Day = GetDay()
     Time = GetTime()
     Data = ReadData()
     if OldTime != Time:
         CheckBell(Time,Day,Data)
-    Day = 3
+    else:
+        CheckRingNow()
     time.sleep(1)
 
