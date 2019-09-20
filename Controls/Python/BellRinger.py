@@ -1,11 +1,17 @@
 import time
 import pandas as df
 import numpy as np
+import datetime
 def GetTime(): ##Function for reciveing
     Time = time.asctime().split() 
     Time = Time[3]
     Time = Time[:-3]
     return(Time)
+def GetDay(): ##Function for getting day
+    Day = datetime.datetime.today().weekday()
+    ##Time = Time[3]
+    ##Time = Time[:-3]
+    return(Day + 1)
 def ReadData():
     try:
         print("Reading data")
@@ -38,10 +44,13 @@ def CheckBell(Time,Day,Data):
                 x += 1
         i += 1
     print("Check Bell function did not find a match in",round((time.time()-BeginTime),5),"secs at ",Time)
+OldTime = GetTime()
+print(GetDay())
 while True:
-    Data = ReadData()
     Time = GetTime()
+    Data = ReadData()
+    if OldTime != Time:
+        CheckBell(Time,Day,Data)
     Day = 3
-    CheckBell(Time,Day,Data)
-    time.sleep(3)
+    time.sleep(1)
 
