@@ -20,9 +20,12 @@
     <p>Time Picker</p>
     <div class="input-group clockpicker">
     <input type="text" class="form-control" value="18:00">
-    <span class="input-group-addon">
-        <span class="glyphicon glyphicon-time"></span>
-    </span>
+    <<div class="input-group clockpicker" data-placement="right" data-align="top" data-autoclose="true">
+  <input type="text" class="form-control" value="09:32">
+  <span class="input-group-addon">
+    <span class="glyphicon glyphicon-time"></span>
+  </span>
+</div>
 </div>
 
     <!-- Optional JavaScript -->
@@ -37,10 +40,10 @@
     <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js" integrity="sha384-JjSmVgyd0p3pXB1rRibZUAYoIIy6OrQ6VrjIEaFf/nJGzIxFDsf4x0xIM+B07jRM" crossorigin="anonymous"></script>
     <script type="text/javascript" src="dist/bootstrap-clockpicker.min.js"></script>
     <script type="text/javascript">
-$('.clockpicker').clockpicker({
-    placement: 'top',
-    align: 'left',
-    donetext: 'Done'
-});
+$('.clockpicker').clockpicker()
+  .find('input').change(function(){
+    // TODO: time changed
+    console.log(this.value);
+  });
   </body>
 </html>
