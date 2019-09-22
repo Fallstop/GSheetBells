@@ -20,16 +20,21 @@
   </head>
   <body>
     <h1>Add A New Bell</h1>
-    
-    
+    <div>
+    <label for="Time">Time Picker:</label>
     <div class="input-group clockpicker" data-placement="right" data-align="top" data-autoclose="false">
-      <p style="padding-top: 0.5em; padding-right:1em; ">Time Picker</p>
-  <input type="text" class="form-control" value="12:00">
+      
+  <input type="text" class="form-control" value="12:00" id="Time">
     <span class="input-group-addon">
         <span class="glyphicon glyphicon-time"></span>
     </span>
 </div>
 
+<label for="BellName">Name For Bell:</label>
+<input type="text" class="form-control" id="BellName">
+<label for="RingingTime">How long to ring for (Secs):</label><br>
+<input type="number" class="form-control" min="0" value="3" id="RingingTime">
+</div>
     <!-- Optional JavaScript -->
     <script>
       
