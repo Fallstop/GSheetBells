@@ -40,12 +40,22 @@
 <input type="number" class="form-control" min="0" value="3" id="RingingTime">
 </div>
 <br>
-<input type="button" class="btn btn-primary" onclick="SubmitForm()" value="Submit">
-<button type="submit" class="btn btn-primary">Submit</button>
+
+<button class="btn btn-primary" onclick="SubmitBell()">Submit</button>
 </form>
     <!-- Optional JavaScript -->
     <script>
-      
+      function wait(ms){
+         var start = new Date().getTime();
+         var end = start;
+         while(end < start + ms) {
+           end = new Date().getTime();
+        }
+      }
+      function SubmitBell() {
+        wait(3000);
+        document.getElementById("NewBellForm").submit();
+      }
       
 </script>
    
