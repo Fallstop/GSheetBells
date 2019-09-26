@@ -1,4 +1,4 @@
-while:
+while True
 do
 	git pull
 	sleep 1
