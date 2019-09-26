@@ -22,7 +22,7 @@
     <h1>Add A New Bell</h1>
     <div>
     
-<form id="NewBellForm" action="/Controls/Homepage.html">
+<form id="NewBellForm" >
   <label for="Time">Time Picker:</label>
     <div class="input-group clockpicker" data-placement="right" data-align="top" data-autoclose="false">
       
@@ -44,7 +44,9 @@
 <button class="btn btn-primary" onclick="SubmitBell()">Submit</button>
 </form>
     <!-- Optional JavaScript -->
+
     <script>
+    	//action="/Controls/Homepage.html"
       function wait(ms){
          var start = new Date().getTime();
          var end = start;
@@ -53,8 +55,8 @@
         }
       }
       function SubmitBell() {
+        document.getElementById("NewBellForm").submit();
         console.log($(NewBellForm))
-        //document.getElementById("NewBellForm").submit();
       }
       
 </script>
