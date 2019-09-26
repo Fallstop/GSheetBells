@@ -56,8 +56,12 @@
       }
       function SubmitBell() {
         //document.getElementById("NewBellForm").submit();
+        var Output = ""
         var Time = document.getElementById("Time").value;
-        console.log(Time)
+        var BellName = document.getElementById("BellName").value;
+        var RingingTime = document.getElementById("RingingTime").value;
+        var Output = Time.toString() + "," + BellName.toString() + "," + RingingTime.toString()
+        console.log(Output)
       }
       
 </script>
