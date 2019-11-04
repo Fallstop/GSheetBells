@@ -2,6 +2,7 @@ import time
 import pandas as df
 import numpy as np
 import datetime
+print("Bell Ringer Started")
 def GetTime(): ##Function for reciveing
     Time = time.asctime().split() 
     Time = Time[3]
