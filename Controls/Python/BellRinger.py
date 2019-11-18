@@ -2,11 +2,14 @@ import time
 import pandas as df
 import numpy as np
 import datetime
-import RPi.GPIO as GPIO
-print("Initiating GPIO")
-GPIO.setmode(GPIO.BOARD)
-GPIO.setwarnings(False)
-GPIO.setup(18,GPIO.OUT)
+try:
+    import RPi.GPIO as GPIO
+    print("Initiating GPIO")
+    GPIO.setmode(GPIO.BOARD)
+    GPIO.setwarnings(False)
+    GPIO.setup(18,GPIO.OUT)
+except:
+    print("GPIO off")
 print("Bell Ringer Started")
 def GetTime(): ##Function for reciveing
     Time = time.asctime().split() 
@@ -28,9 +31,13 @@ def ReadData():
         ReadData()
 def RingBell(TimeToRingFor):
     print("Ringing Bell for:",TimeToRingFor," seconds")
-    GPIO.output(18,GPIO.HIGH)
-    time.sleep(TimeToRingFor)
-    GPIO.output(18,GPIO.LOW)
+    try:
+        GPIO.output(18,GPIO.HIGH)
+        time.sleep(TimeToRingFor)
+        GPIO.output(18,GPIO.LOW)
+    except:
+        print("Ring Ring?")
+        time.sleep(TimeToRingFor)
     print("Stoped Ringing Bell")
 def CheckBell(Time,Day,Data):
     
