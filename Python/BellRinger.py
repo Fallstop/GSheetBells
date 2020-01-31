@@ -29,6 +29,7 @@ def CheckBell():
     currentTime = GetTime()
     print(currentTime)
     bellTimes = retriveBellTimes() #First position is the config for how long to ring, rest are belltimes 
+    print("Got Sheet data")
     i = 1
     while i < len(bellTimes):
         if bellTimes[i] == currentTime:
