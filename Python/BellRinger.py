@@ -41,7 +41,7 @@ def CheckBell():
         if bellTimes[i] == currentTime:
             print("Found a match")
             RingBell(int(bellTimes[0]))
-            break
+            return()
         i+=1
     print("Did not find a match")
 def retriveBellTimes(): #From Google Sheets
