@@ -35,12 +35,14 @@ def CheckBell():
     currentTime = GetTime()
     print(currentTime)
     bellTimes = retriveBellTimes() #First position is the config for how long to ring, rest are belltimes 
-    print("Got Sheet data")
+    print("Got Sheet data,",len(bellTimes),"items long.")
     i = 1
     while i < len(bellTimes):
         if bellTimes[i] == currentTime:
+            print("Found a match")
             RingBell(int(bellTimes[0]))
             break
+        i+=1
     print("Did not find a match")
 def retriveBellTimes(): #From Google Sheets
     # If modifying these scopes, delete the file token.pickle.
