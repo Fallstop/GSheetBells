@@ -99,5 +99,6 @@ while True:
     Time = GetTime()
     if OldTime != Time:
         CheckBell()
+        OldTime = GetTime()
     time.sleep(1)
 
