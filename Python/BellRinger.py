@@ -39,7 +39,6 @@ def CheckRingNow():
     ##TODO
     print("CheckRingNow is still under develment")
 OldTime = GetTime()
-print(GetDay())
 while True:
     Time = GetTime()
     if OldTime != Time:
