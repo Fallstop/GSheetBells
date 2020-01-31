@@ -56,4 +56,4 @@ def retriveBellTimes():
     return(response)
 
 if __name__ == '__main__':
-    print(retriveTimes())
+    print(retriveBellTimes())
