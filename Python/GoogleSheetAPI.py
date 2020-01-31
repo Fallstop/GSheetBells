@@ -1,17 +1,12 @@
-from __future__ import print_function
-import pickle
-import os.path
-import datetime
-from googleapiclient.discovery import build
-from google_auth_oauthlib.flow import InstalledAppFlow
-from google.auth.transport.requests import Request
-
-# If modifying these scopes, delete the file token.pickle.
-SCOPES = ['https://www.googleapis.com/auth/spreadsheets.readonly']
-
-
-
-def main():
+def retriveBellTimes():
+    import pickle
+    import os.path
+    import datetime
+    from googleapiclient.discovery import build
+    from google_auth_oauthlib.flow import InstalledAppFlow
+    from google.auth.transport.requests import Request
+    # If modifying these scopes, delete the file token.pickle.
+    SCOPES = ['https://www.googleapis.com/auth/spreadsheets.readonly']
     SPREADSHEET_ID = '1JmhFI1zfQ7La_QXS8TCnj1R6B8r_KNLe8jk24eF6E64'
     response = []
     #Get Correct range
@@ -61,4 +56,4 @@ def main():
     return(response)
 
 if __name__ == '__main__':
-    print(main())
+    print(retriveTimes())
