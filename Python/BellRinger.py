@@ -32,7 +32,7 @@ def CheckBell():
     i = 1
     while i < len(bellTimes):
         if bellTimes[i] == currentTime:
-            RingBell(bellTimes[0])
+            RingBell(int(bellTimes[0]))
             break
     print("Did not find a match")
 def CheckRingNow():
