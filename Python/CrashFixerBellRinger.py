@@ -9,6 +9,6 @@ import sys
 filename = "BellRinger.py"
 while True:
     print("\nStarting " + filename)
-    p = Popen("python " + filename, shell=True)
+    p = Popen("python3 " + filename + " > Bellringer.log", shell=True)
     print("Started")
     p.wait()
