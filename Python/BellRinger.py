@@ -31,23 +31,19 @@ def RingBell(TimeToRingFor):
         print("Ring Ring?")
         time.sleep(TimeToRingFor)
     print("Stoped Ringing Bell")
-def CheckBell(bellTimes):
+def CheckBell():
     currentTime = GetTime()
     print(currentTime)
-    try:
-        bellTimes = retriveBellTimes() #Update Bell times
-    except:
-        print("Failed to retreive bell times, using cache (Usaly caused by no internet)") #Use Cache if fails
+    bellTimes = retriveBellTimes() #First position is the config for how long to ring, rest are belltimes 
     print("Got Sheet data,",len(bellTimes),"items long.")
     i = 1
     while i < len(bellTimes):
         if bellTimes[i] == currentTime:
             print("Found a match")
             RingBell(int(bellTimes[0]))
-            return(bellTimes)
+            return()
         i+=1
     print("Did not find a match")
-    return(bellTimes)
 def retriveBellTimes(): #From Google Sheets
     # If modifying these scopes, delete the file token.pickle.
     SCOPES = ['https://www.googleapis.com/auth/spreadsheets.readonly']
@@ -99,10 +95,11 @@ def retriveBellTimes(): #From Google Sheets
             response.append(row[0])
     return(response)
 OldTime = GetTime()
+BellTimes = [3]
 while True:
     Time = GetTime()
     if OldTime != Time:
-        bellTimes = CheckBell(bellTimes)
+        CheckBell()
         OldTime = GetTime()
     time.sleep(1)
 
