@@ -1,3 +1,4 @@
 #!/bin/bash
-cd Python
-python3 CrashFixerBellRinger.py >> BellRingerStartLog.txt
+
+cd ~/Documents/HCBellsPython/Python/
+python3 CrashFixerBellRinger.py
