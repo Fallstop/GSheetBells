@@ -31,13 +31,15 @@ def RingBell(TimeToRingFor):
         print("Ring Ring?")
         time.sleep(TimeToRingFor)
     print("Stoped Ringing Bell")
-def CheckBell(BellTimes):
+
+def CheckBell(bellTimes):
     currentTime = GetTime()
     print(currentTime)
     try:
         bellTimes = retriveBellTimes() #First position is the config for how long to ring, rest are belltimes 
     except:
         print("No Internet!")
+	
     print("Got Sheet data,",len(bellTimes),"items long.")
     i = 1
     while i < len(bellTimes):
@@ -99,11 +101,11 @@ def retriveBellTimes(): #From Google Sheets
             response.append(row[0])
     return(response)
 OldTime = GetTime()
-BellTimes = [3]
+bellTimes = [3]
 while True:
     Time = GetTime()
     if OldTime != Time:
-        BellTimes = CheckBell(BellTimes)
+        bellTimes = CheckBell(bellTimes)
         OldTime = GetTime()
     time.sleep(1)
 
