@@ -12,7 +12,7 @@ try:
     print("Initiating GPIO")
     GPIO.setmode(GPIO.BOARD)
     GPIO.setwarnings(False)
-    GPIO.setup(18,GPIO.OUT)
+    GPIO.setup(12,GPIO.OUT)
 except:
     print("GPIO off")
 print("Bell Ringer Started")
@@ -24,9 +24,9 @@ def GetTime(): ##Function for reciveing
 def RingBell(TimeToRingFor):
     print("Ringing Bell for:",TimeToRingFor," seconds")
     try:
-        GPIO.output(18,GPIO.HIGH)
+        GPIO.output(12,GPIO.HIGH)
         time.sleep(TimeToRingFor)
-        GPIO.output(18,GPIO.LOW)
+        GPIO.output(12,GPIO.LOW)
     except:
         print("Ring Ring?")
         time.sleep(TimeToRingFor)
