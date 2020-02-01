@@ -34,7 +34,10 @@ def RingBell(TimeToRingFor):
 def CheckBell():
     currentTime = GetTime()
     print(currentTime)
-    bellTimes = retriveBellTimes() #First position is the config for how long to ring, rest are belltimes 
+    try:
+        bellTimes = retriveBellTimes() #First position is the config for how long to ring, rest are belltimes 
+    except:
+        print("No Internet!")
     print("Got Sheet data,",len(bellTimes),"items long.")
     i = 1
     while i < len(bellTimes):
