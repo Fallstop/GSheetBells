@@ -45,7 +45,7 @@ def CheckBell(bellTimes):
         if bellTimes[i] == currentTime:
             print("Found a match")
             RingBell(int(bellTimes[0]))
-            return(BellTimes)
+            return(bellTimes)
         i+=1
     return(bellTimes)
     print("Did not find a match")
