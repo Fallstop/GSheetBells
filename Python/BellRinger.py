@@ -27,7 +27,11 @@ def RingBell(TimeToRingFor):
     print("Ringing Bell for:",TimeToRingFor," seconds")
     try:
         GPIO.output(12,GPIO.HIGH)
+        time.sleep(0.5)
+        GPIO.output(12,GPIO.LOW)
         time.sleep(TimeToRingFor)
+        GPIO.output(12,GPIO.HIGH)
+        time.sleep(0.5)
         GPIO.output(12,GPIO.LOW)
     except:
         print("Ring Ring?")
