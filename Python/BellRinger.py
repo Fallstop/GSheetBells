@@ -1,5 +1,6 @@
 import time
 import datetime
+print ("Bellringer startup, time:",str(datetime.datetime.now())[:-7])
 import pandas as df
 import numpy as np
 from GoogleSheetAPI import *
