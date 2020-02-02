@@ -1,9 +1,10 @@
 import time
 import datetime
+import pandas as df
+import numpy as np
 from GoogleSheetAPI import *
 import pickle
 import os.path
-import datetime
 from googleapiclient.discovery import build
 from google_auth_oauthlib.flow import InstalledAppFlow
 from google.auth.transport.requests import Request
@@ -31,13 +32,18 @@ def RingBell(TimeToRingFor):
         print("Ring Ring?")
         time.sleep(TimeToRingFor)
     print("Stoped Ringing Bell")
-def CheckBell(bellTimes):
+def CheckBell():
+    global bellTimeDay
+    global bellTimes
     currentTime = GetTime()
     print(currentTime)
-    try:
-        bellTimes = retriveBellTimes() #First position is the config for how long to ring, rest are belltimes 
-    except:
+    try: #Try get the online Version
+        bellTimes = retriveBellTimesOnline() #First position is the config for how long to ring, rest are belltimes
+        bellTimeDay = datetime.datetime.today().weekday()
+    except: 
         print("No Internet!")
+        print("Using offline preset!")
+        bellTimes = retriveBellTimesOffline()
 	
     print("Got Sheet data,",len(bellTimes),"items long.")
     i = 1
@@ -45,11 +51,11 @@ def CheckBell(bellTimes):
         if bellTimes[i] == currentTime:
             print("Found a match")
             RingBell(int(bellTimes[0]))
-            return(bellTimes)
+            return()
         i+=1
-    return(bellTimes)
+    return()
     print("Did not find a match")
-def retriveBellTimes(): #From Google Sheets
+def retriveBellTimesOnline(): #From Google Sheets
     # If modifying these scopes, delete the file token.pickle.
     SCOPES = ['https://www.googleapis.com/auth/spreadsheets.readonly']
     SPREADSHEET_ID = '1JmhFI1zfQ7La_QXS8TCnj1R6B8r_KNLe8jk24eF6E64'
@@ -99,12 +105,48 @@ def retriveBellTimes(): #From Google Sheets
         for row in values:
             response.append(row[0])
     return(response)
+
+
+def retriveBellTimesOffline():
+    global bellTimes
+    global bellTimeDay
+    if bellTimeDay == datetime.datetime.today().weekday():
+        return(bellTimes)
+    #From OfflineBellBackup
+    try:
+        print("Reading data")
+        data = df.read_csv("OfflineBellBackup/normAllDays.csv",header=None) ##File with times and dates for all bells
+    except Exception as e:
+        print("Read failed:",e)
+        return([3])
+    print(data)
+    day = datetime.datetime.today().weekday()
+    dayBellTimes = data.iloc[:,day]
+    print (dayBellTimes)
+    bellTimes = [data.iloc[0,7]]
+    print(bellTimes)
+    dayBellTimesList = dayBellTimes.values.tolist()
+    i = 0
+    while i < len(dayBellTimesList):
+        if str(dayBellTimesList[i]) == "nan":
+            break
+        else:
+            print(dayBellTimesList[i])
+            bellTimes.append(str(dayBellTimesList[i]))
+        i+=1
+    print(bellTimes)
+    bellTimeDay = datetime.datetime.today().weekday()
+    return(bellTimes)
+
+
+#Main code (Made entirely out of functions)
 OldTime = GetTime()
 bellTimes = [3]
+bellTimeDay = 8
 while True:
     Time = GetTime()
     if OldTime != Time:
-        bellTimes = CheckBell(bellTimes)
+        CheckBell()
         OldTime = GetTime()
     time.sleep(1)
 
