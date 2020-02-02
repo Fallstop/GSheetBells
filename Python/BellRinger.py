@@ -31,7 +31,7 @@ def RingBell(TimeToRingFor):
         print("Ring Ring?")
         time.sleep(TimeToRingFor)
     print("Stoped Ringing Bell")
-def CheckBell(BellTimes):
+def CheckBell(bellTimes):
     currentTime = GetTime()
     print(currentTime)
     try:
@@ -46,7 +46,7 @@ def CheckBell(BellTimes):
             RingBell(int(bellTimes[0]))
             return(BellTimes)
         i+=1
-    return(BellTimes)
+    return(bellTimes)
     print("Did not find a match")
 def retriveBellTimes(): #From Google Sheets
     # If modifying these scopes, delete the file token.pickle.
