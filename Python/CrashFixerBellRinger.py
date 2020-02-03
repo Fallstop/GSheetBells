@@ -11,6 +11,6 @@ filename = "BellRinger.py"
 while True:
     datetimestr = time.strftime("%Y-%m-%d")
     print("\nStarting " + filename)
-    p = Popen("python3 " + filename + " 2>&1 | tee -a logs/BellRinger-"+datetimestr+".log", shell=True)
+    p = Popen("python3 " + filename, shell=True)
     print("Started")
     p.wait()
