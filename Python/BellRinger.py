@@ -27,7 +27,7 @@ def RingBell():
     print("Ringing Bell")
     try:
         GPIO.output(12,GPIO.HIGH)
-        time.sleep(0.1
+        time.sleep(0.5)
         GPIO.output(12,GPIO.LOW)
     except:
         print("Ring Ring?")
