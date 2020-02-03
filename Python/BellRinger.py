@@ -23,11 +23,11 @@ def GetTime(): ##Function for reciveing
     Time = Time[3]
     Time = Time[:-3]
     return(Time)
-def RingBell(TimeToRingFor):
-    print("Ringing Bell for:",TimeToRingFor," seconds")
+def RingBell():
+    print("Ringing Bell")
     try:
         GPIO.output(12,GPIO.HIGH)
-        time.sleep(TimeToRingFor)
+        time.sleep(0.5)
         GPIO.output(12,GPIO.LOW)
     except:
         print("Ring Ring?")
@@ -51,7 +51,7 @@ def CheckBell():
     while i < len(bellTimes):
         if bellTimes[i] == currentTime:
             print("Found a match")
-            RingBell(int(bellTimes[0]))
+            RingBell()
             return()
         i+=1
     return()
