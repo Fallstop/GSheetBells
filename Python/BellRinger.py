@@ -97,7 +97,7 @@ def retriveBellTimesOnline(): #From Google Sheets
     values = result.get('values', [])
     if not values:
         print('No hash found.')
-        except("No hash found from sheet")
+        raise Exception("No hash found from sheet")
     else:
         for row in values:
             if offlineHash == row[0]:
@@ -110,7 +110,7 @@ def retriveBellTimesOnline(): #From Google Sheets
 
     if not values:
         print('No times found.')
-        except("No times found from sheet")
+        raise Exception("No times found from sheet")
     else:
         for row in values:
             response.append(row[0])
