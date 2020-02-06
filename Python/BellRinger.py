@@ -41,9 +41,11 @@ def CheckBell():
     try: #Try get the online Version
         bellTimes = retriveBellTimesOnline() #First position is the config for how long to ring, rest are belltimes
         bellTimeDay = datetime.datetime.today().weekday()
-    except: 
-        print("No Internet!")
-        print("Using offline preset!")
+    except Exception as e:
+        print("Failed to get updated sheet, Exception:",e)
+        print("####")
+        print("Proberly No Internet!")
+        print("Using offline mode!")
         bellTimes = retriveBellTimesOffline()
 	
     print("Got Sheet data,",len(bellTimes),"items long.")
@@ -61,9 +63,11 @@ def retriveBellTimesOnline(): #From Google Sheets
     SCOPES = ['https://www.googleapis.com/auth/spreadsheets.readonly']
     SPREADSHEET_ID = '1JmhFI1zfQ7La_QXS8TCnj1R6B8r_KNLe8jk24eF6E64'
     response = []
+    day = datetime.datetime.today().weekday()
     #Get Correct range
-    DayRangeNames = ["mondayAPI","tuesdayAPI","wensdayAPI","thursdayAPI","fridayAPI","saterdayAPI","sundayAPI"]
-    RangeName = DayRangeNames[(datetime.datetime.today().weekday())]
+    ##DayRangeNames = ["mondayAPI","tuesdayAPI","wensdayAPI","thursdayAPI","fridayAPI","saterdayAPI","sundayAPI"]
+    ##RangeName = DayRangeNames[(datetime.datetime.today().weekday())]
+    RangeName = "timeDataAPI"
     print(RangeName)
     creds = None
     # The file token.pickle stores the user's access and refresh tokens, and is
@@ -89,19 +93,24 @@ def retriveBellTimesOnline(): #From Google Sheets
     # Call the Sheets API
     sheet = service.spreadsheets()
     #Get config
-    result = sheet.values().get(spreadsheetId=SPREADSHEET_ID,range="config").execute()
+    result = sheet.values().get(spreadsheetId=SPREADSHEET_ID,range="dataHashAPI").execute()
     values = result.get('values', [])
     if not values:
-        print('No config found.')
+        print('No hash found.')
+        except("No hash found from sheet")
     else:
         for row in values:
-            response.append(row[0])#Add to start
+            if offlineHash == row[0]:
+                print("already got")
+            
+        
     #Get Times
     result = sheet.values().get(spreadsheetId=SPREADSHEET_ID,range=RangeName).execute()
     values = result.get('values', [])
 
     if not values:
         print('No times found.')
+        except("No times found from sheet")
     else:
         for row in values:
             response.append(row[0])
