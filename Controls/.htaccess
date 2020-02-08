@@ -1,4 +1,0 @@
-AuthUserFile /home/pi/Documents/WebsiteControls/.htpasswd
-AuthType Basic
-AuthName "Dialog prompt"
-Require valid-user
