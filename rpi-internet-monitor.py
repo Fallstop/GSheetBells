@@ -78,7 +78,7 @@ GPIO.setup(GPIO_RED_LIGHT, GPIO.OUT)
 lamp_all_off()
 lamp_test()
 time.sleep(0.5)
-lamp_amber_on()     # turn amber lamp on during the first test
+lamp_all_off()    # turn amber lamp on during the first test
 
 # main loop: ping sites, turn appropriate lamp on, wait, repeat
 test = 0
