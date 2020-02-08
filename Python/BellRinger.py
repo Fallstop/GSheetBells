@@ -37,7 +37,7 @@ def writeOfflineBellTimes(bellTimes):
     #Used if new bell times are found
     try:
         csv = pd.DataFrame.from_dict(bellTimes)
-        csv.to_csv("OfflineBellBackup/normAllDays.csv",index=False,header=False)
+        csv.to_csv("offlineBellBackup/normAllDays.csv",index=False,header=False)
         print("Done saving bell time backup")
         return()
     except Exception as e:
@@ -47,7 +47,7 @@ def getOfflineBellTimes():
     #Used on start up to get back up
     try:
         bellTimesArray = []
-        csvFile = open("OfflineBellBackup/normAllDays.csv","r")
+        csvFile = open("offlineBellBackup/normAllDays.csv","r")
         csvText = csvFile.readlines()
         for row in csvText:
             bellTimesArray.append(row.rstrip('\n').split(","))
@@ -207,5 +207,4 @@ while True:
             CheckBell(checkChanges = False)
         OldTime = GetTime()
     time.sleep(1)
-
 
