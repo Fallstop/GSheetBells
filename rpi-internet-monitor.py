@@ -88,7 +88,7 @@ while True:
   success = ping_sites(SITES, DELAY_BETWEEN_PINGS, 2)
   if success == 0:
     lamp_red_on()
-  elif success => .80:  
+  elif success >= .80:  
     lamp_green_on()
   print( "Waiting " + str(DELAY_BETWEEN_TESTS) + " seconds until next test.")
   time.sleep(DELAY_BETWEEN_TESTS)
