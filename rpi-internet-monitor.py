@@ -5,8 +5,8 @@ import sys
 import time
 import RPi.GPIO as GPIO
 
-GPIO_GREEN_LIGHT = 17      # led for internet working
-GPIO_RED_LIGHT = 22        # led for internet is not working
+GPIO_GREEN_LIGHT = 29      # led for internet working
+GPIO_RED_LIGHT = 31        # led for internet is not working
 
 DELAY_BETWEEN_PINGS = 1    # delay in seconds
 DELAY_BETWEEN_TESTS = 120  # delay in seconds
