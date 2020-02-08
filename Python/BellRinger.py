@@ -51,19 +51,19 @@ def getOfflineBellTimes():
         csvText = csvFile.readlines()
         for row in csvText:
             bellTimesArray.append(row.rstrip('\n').split(","))
-        print(bellTimesArray)
-        print("Done saving bell time backup")
+        print("Got offline backup")
         return(bellTimesArray)
     except Exception as e:
-        print("Write file exception on bell time backup")
+        print("Read file exception on bell time backup")
         print(e)
 
-def GetTime(): ##Function for reciveing
+def GetTime(): ##Function for formating time
     Time = time.asctime().split() 
     Time = Time[3]
     Time = Time[:-3]
     return(Time)
 def RingBell():
+    print()
     print("Ringing Bell")
     try:
         GPIO.output(12,GPIO.HIGH)
@@ -73,31 +73,30 @@ def RingBell():
         print("GPIO OFF, Ring Ring?")
         time.sleep(7)
     print("Stoped Ringing Bell")
-def CheckBell():
+    print()
+def CheckBell(checkChanges):
     ################
     #GET BELL TIMES
     ################
     global bellTimes
     currentTime = GetTime()
-    print(currentTime)
-    try: #Try get the online Version
-        bellTimesTemp = retriveBellTimesOnline() #First position is the config for how long to ring, rest are belltimes
-        if bellTimesTemp:
-            print(bellTimesTemp)
-            bellTimes = bellTimesTemp
-    except Exception as e:
-        print("Failed to get updated sheet, Exception:",e)
-        print("####")
-        print("Proberly No Internet!")
-        print("Using offline mode!")
-        bellTimes = retriveBellTimesOffline()
+    print("Current time:",currentTime)
+    if checkChanges:
+        print("Atempting to check for changes")
+        try: #Try get the online Version
+            bellTimesTemp = retriveBellTimesOnline() #First position is the config for how long to ring, rest are belltimes
+            if bellTimesTemp:
+                print(bellTimesTemp)
+                bellTimes = bellTimesTemp
+        except Exception as e:
+            print("Failed to get updated sheet, Exception:",e)
+            print("Proberly No Internet!")
+            print("Using offline backup!")
+            bellTimes = getOfflineBellTimes()
     bellTimesDF = pd.DataFrame(bellTimes)
     bellDayTimes = bellTimesDF.fillna(0.0).iloc[:,datetime.datetime.today().weekday()].values.tolist()
     
-##    for row in bellTimes:
-##        bellDayTimes.append(row[datetime.datetime.today().weekday()]) #Get the right day times
     bellDayTimes.pop(0)
-    print(bellDayTimes)
     print("Got Sheet data,",len(bellDayTimes),"items long.")
     #######################################
     #CHECK BELL TIMES AGAINST CURRENT TIME
@@ -109,8 +108,9 @@ def CheckBell():
             RingBell()
             return()
         i+=1
-    return()
     print("Did not find a match")
+    print()
+    return()
 def retriveBellTimesOnline(): #From Google Sheets
     #############
     #SETUP
@@ -185,35 +185,6 @@ def retriveBellTimesOnline(): #From Google Sheets
                     return(bellTimes)
 
 
-def retriveBellTimesOffline():
-    global bellTimes
-    #From OfflineBellBackup
-    try:
-        print("Reading data")
-        data = pd.read_csv("OfflineBellBackup/normAllDays.csv",header=None) ##File with times and dates for all bells
-    except Exception as e:
-        print("Read failed:",e)
-        return([3])
-    print(data)
-    day = datetime.datetime.today().weekday()
-    dayBellTimes = data.iloc[:,day]
-    print (dayBellTimes)
-    bellTimes = [data.iloc[0,7]]
-    print(bellTimes)
-    dayBellTimesList = dayBellTimes.values.tolist()
-    i = 0
-    while i < len(dayBellTimesList):
-        if str(dayBellTimesList[i]) == "nan":
-            break
-        else:
-            print(dayBellTimesList[i])
-            bellTimes.append(str(dayBellTimesList[i]))
-        i+=1
-    print(bellTimes)
-    
-    return(bellTimes)
-
-
         
         
 
@@ -228,11 +199,12 @@ bellTimes = getOfflineBellTimes() #Placeholder that won't error or ring
 print("Bell Ringer Started")
 #Main bell check loop
 while True:
-    CheckBell()
+    Time = GetTime()
+    if OldTime != Time:
+        if (int(Time[3:])+1)%15==0:
+            CheckBell(checkChanges = True)
+        else:
+            CheckBell(checkChanges = False)
+        OldTime = GetTime()
     time.sleep(1)
-##    Time = GetTime()
-##    if OldTime != Time:
-##        CheckBell()
-##        OldTime = GetTime()
-##    time.sleep(1)
 
