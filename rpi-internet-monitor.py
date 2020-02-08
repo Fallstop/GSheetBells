@@ -19,10 +19,10 @@ def ping(site):
   try:
     output = subprocess.check_output(cmd, stderr=subprocess.STDOUT, shell=True)
   except subprocess.CalledProcessError, e:
-    debug_message(debug, site + ": not reachable")
+    print( site + ": not reachable")
     return 0
   else:
-    debug_message(debug, site + ": reachable")
+    print(site + ": reachable")
     return 1
 
 # ping the sites in the site list the specified number of times
@@ -36,7 +36,7 @@ def ping_sites(site_list, wait_time, times):
       time.sleep(wait_time)
   print("Percentage successful: " + str(int(100 * (successful_pings / float(attempted_pings)))) + "%")
   return successful_pings / float(attempted_pings)   # return percentage successful 
-)
+
 
 # turn the green lamp on
 def lamp_green_on():
