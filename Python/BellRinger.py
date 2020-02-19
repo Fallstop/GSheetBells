@@ -95,7 +95,7 @@ def CheckBell(checkChanges):
             bellTimes = getOfflineBellTimes()
     bellTimesDF = pd.DataFrame(bellTimes)
     bellDayTimes = bellTimesDF.fillna(0.0).iloc[:,datetime.datetime.today().weekday()].values.tolist()
-    
+    print("Bell day times",bellDayTimes)
     bellDayTimes.pop(0)
     print("Got Sheet data,",len(bellDayTimes),"items long.")
     #######################################
