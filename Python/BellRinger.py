@@ -107,6 +107,8 @@ def CheckBell(checkChanges):
             print("Found a match")
             RingBell()
             return()
+        else:
+            print("Checked against:",bellDayTimes[i])
         i+=1
     print("Did not find a match")
     print()
