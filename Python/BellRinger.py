@@ -101,7 +101,7 @@ def CheckBell(checkChanges):
     #######################################
     #CHECK BELL TIMES AGAINST CURRENT TIME
     #######################################
-    i = 1
+    i = 0
     while i < len(bellDayTimes):
         if bellDayTimes[i] == currentTime:
             print("Found a match")
