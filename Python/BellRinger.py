@@ -161,7 +161,7 @@ def retriveBellTimesOnline(): #From Google Sheets
         raise Exception("No hash found from sheet")
     else:
         for row in values:
-            if currentHash == row[0] and row[0] != "#NAME?"  :
+            if currentHash == row[0] or row[0] == "#NAME?"  :
                 print("No Changes")
                 return(False)
             else:
