@@ -1,3 +1,4 @@
 credentials.*
 token.*
+docs/build/*
 __pycache__
