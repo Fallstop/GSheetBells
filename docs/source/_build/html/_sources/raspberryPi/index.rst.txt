@@ -18,4 +18,3 @@ First just make sure the python3 and pip is installed
 
 Next clone the code into Raspberry Pi's home directory
 ``git clone https://github.com/Fallstop/GSheetBells.git``
-
