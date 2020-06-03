@@ -80,7 +80,14 @@
             
               <!-- Local TOC -->
               <div class="local-toc"><ul>
-<li><a class="reference internal" href="#">The Raspberry pi</a></li>
+<li><a class="reference internal" href="#">The Raspberry pi</a><ul>
+<li><a class="reference internal" href="#installing-raspbian">Installing Raspbian</a></li>
+<li><a class="reference internal" href="#configuring-the-pi-for-operation">Configuring the Pi for operation</a><ul>
+<li><a class="reference internal" href="#first-change-the-password-and-hostname">First, change the password and hostname</a></li>
+</ul>
+</li>
+</ul>
+</li>
 </ul>
 </div>
             
@@ -148,16 +155,30 @@
   <div class="section" id="the-raspberry-pi">
 <h1>The Raspberry pi<a class="headerlink" href="#the-raspberry-pi" title="Permalink to this headline">¶</a></h1>
 <p>This is really up to you on which one you use, you can just use any slow ones sitting around, although make sure it <em>dose</em> have an ethernet port (You can use wifi, it’s just more prone to password changes etc). I used an old raspberry pi 2 in my case.
-You also need the SD card to hold the code and operating system.</p>
+You also need the SD card to act as the system drive.</p>
 <p>Raspberry pi photo here</p>
-<p>Installing Raspbian</p>
+<div class="section" id="installing-raspbian">
+<h2>Installing Raspbian<a class="headerlink" href="#installing-raspbian" title="Permalink to this headline">¶</a></h2>
 <p>Go follow this guide to create a bootable raspbian sd card, you want to install Raspberry Pi OS Lite, under the Raspberry Pi OS (Other) tab.
 <a class="reference external" href="https://www.raspberrypi.org/documentation/installation/installing-images/">https://www.raspberrypi.org/documentation/installation/installing-images/</a></p>
-<p>Configuring the Pi</p>
-<p>First just make sure the python3 and pip is installed
-<code class="docutils literal notranslate"><span class="pre">sudo</span> <span class="pre">apt</span> <span class="pre">update</span> <span class="pre">&amp;&amp;</span> <span class="pre">sudo</span> <span class="pre">apt</span> <span class="pre">install</span> <span class="pre">python3</span> <span class="pre">python3-pip</span></code></p>
+<p>Now with the operating system on the SD card, place a file name <code class="docutils literal notranslate"><span class="pre">ssh</span></code> with no extension into the boot partition on the SD card.</p>
+</div>
+<div class="section" id="configuring-the-pi-for-operation">
+<h2>Configuring the Pi for operation<a class="headerlink" href="#configuring-the-pi-for-operation" title="Permalink to this headline">¶</a></h2>
+<p>First, we need to connect. Plug in the Raspberry Pi into ethernet. Next on another computer that is on the same network, open a terminal (It’s called command line on windows) and try running <code class="docutils literal notranslate"><span class="pre">ssh</span> <span class="pre">pi&#64;raspberrypi</span></code> to open a remote session to the Raspberry Pi. Enter the default password <code class="docutils literal notranslate"><span class="pre">raspberry</span></code>.</p>
+<div class="admonition note">
+<p class="admonition-title">Note</p>
+<p>If this dose not work, then make sure the ethernet is plugged in properly and if it still dose not work, plug in a monitor and keyboard, log in, and run ‘’ip address’’ to find the ip address, then try again on the other computer: <code class="docutils literal notranslate"><span class="pre">ssh</span> <span class="pre">pi&#64;[Ip</span> <span class="pre">address</span> <span class="pre">here]</span></code>. If all fails, run the next commands manually and enable manually in the <cite>raspi-config -&gt; Interfacing options</cite> menu.</p>
+</div>
+<div class="section" id="first-change-the-password-and-hostname">
+<h3>First, change the password and hostname<a class="headerlink" href="#first-change-the-password-and-hostname" title="Permalink to this headline">¶</a></h3>
+<p>Enter <code class="docutils literal notranslate"><span class="pre">sudo</span> <span class="pre">raspi-config</span></code>, use the arrow keys and enter to enter the network sub-menu. Change the Hostname something relevant (make sure to make a note). Wait then enter the Interfacing options and enable <strong>I2C</strong></p>
+<p>First just make sure the dependencies are installed
+<code class="docutils literal notranslate"><span class="pre">sudo</span> <span class="pre">apt</span> <span class="pre">update</span> <span class="pre">&amp;&amp;</span> <span class="pre">sudo</span> <span class="pre">apt</span> <span class="pre">install</span> <span class="pre">python3</span> <span class="pre">python3-pip</span> <span class="pre">screen</span></code></p>
 <p>Next clone the code into Raspberry Pi’s home directory
 <code class="docutils literal notranslate"><span class="pre">git</span> <span class="pre">clone</span> <span class="pre">https://github.com/Fallstop/GSheetBells.git</span></code></p>
+</div>
+</div>
 </div>
 
 
