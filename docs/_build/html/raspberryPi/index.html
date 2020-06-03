@@ -82,10 +82,7 @@
               <div class="local-toc"><ul>
 <li><a class="reference internal" href="#">The Raspberry pi</a><ul>
 <li><a class="reference internal" href="#installing-raspbian">Installing Raspbian</a></li>
-<li><a class="reference internal" href="#configuring-the-pi-for-operation">Configuring the Pi for operation</a><ul>
-<li><a class="reference internal" href="#first-change-the-password-and-hostname">First, change the password and hostname</a></li>
-</ul>
-</li>
+<li><a class="reference internal" href="#configuring-the-pi-for-operation">Configuring the Pi for operation</a></li>
 </ul>
 </li>
 </ul>
@@ -156,28 +153,40 @@
 <h1>The Raspberry pi<a class="headerlink" href="#the-raspberry-pi" title="Permalink to this headline">¶</a></h1>
 <p>This is really up to you on which one you use, you can just use any slow ones sitting around, although make sure it <em>dose</em> have an ethernet port (You can use wifi, it’s just more prone to password changes etc). I used an old raspberry pi 2 in my case.
 You also need the SD card to act as the system drive.</p>
-<p>Raspberry pi photo here</p>
+<div class="admonition note">
+<p class="admonition-title">Note</p>
+<p>If you get stuck anywhere on this section, Search engines, like Google, is your friend and will have the answer if you look hard enough.</p>
+</div>
+<a class="reference internal image-reference" href="../_images/Raspberry-Pi-2-Bare.png"><img alt="../_images/Raspberry-Pi-2-Bare.png" class="align-center" src="../_images/Raspberry-Pi-2-Bare.png" style="width: 50%;" /></a>
 <div class="section" id="installing-raspbian">
 <h2>Installing Raspbian<a class="headerlink" href="#installing-raspbian" title="Permalink to this headline">¶</a></h2>
-<p>Go follow this guide to create a bootable raspbian sd card, you want to install Raspberry Pi OS Lite, under the Raspberry Pi OS (Other) tab.
-<a class="reference external" href="https://www.raspberrypi.org/documentation/installation/installing-images/">https://www.raspberrypi.org/documentation/installation/installing-images/</a></p>
+<p>Go follow this <a class="reference external" href="https://www.raspberrypi.org/documentation/installation/installing-images/">guide</a> to create a bootable raspbian sd card. Install Raspberry Pi OS Lite, (under the <cite>Raspberry Pi OS Other</cite> tab in there software).</p>
 <p>Now with the operating system on the SD card, place a file name <code class="docutils literal notranslate"><span class="pre">ssh</span></code> with no extension into the boot partition on the SD card.</p>
 </div>
 <div class="section" id="configuring-the-pi-for-operation">
 <h2>Configuring the Pi for operation<a class="headerlink" href="#configuring-the-pi-for-operation" title="Permalink to this headline">¶</a></h2>
-<p>First, we need to connect. Plug in the Raspberry Pi into ethernet. Next on another computer that is on the same network, open a terminal (It’s called command line on windows) and try running <code class="docutils literal notranslate"><span class="pre">ssh</span> <span class="pre">pi&#64;raspberrypi</span></code> to open a remote session to the Raspberry Pi. Enter the default password <code class="docutils literal notranslate"><span class="pre">raspberry</span></code>.</p>
+<p>First, we need to connect. Plug in the Raspberry Pi into ethernet. Next on another computer that is on the same network, open a terminal (It’s called command line on windows) and try running <code class="docutils literal notranslate"><span class="pre">ssh</span> <span class="pre">pi&#64;raspberrypi</span></code> to open a remote session to the Raspberry Pi. The default password <code class="docutils literal notranslate"><span class="pre">raspberry</span></code> which we will change soon.</p>
 <div class="admonition note">
 <p class="admonition-title">Note</p>
 <p>If this dose not work, then make sure the ethernet is plugged in properly and if it still dose not work, plug in a monitor and keyboard, log in, and run ‘’ip address’’ to find the ip address, then try again on the other computer: <code class="docutils literal notranslate"><span class="pre">ssh</span> <span class="pre">pi&#64;[Ip</span> <span class="pre">address</span> <span class="pre">here]</span></code>. If all fails, run the next commands manually and enable manually in the <cite>raspi-config -&gt; Interfacing options</cite> menu.</p>
 </div>
-<div class="section" id="first-change-the-password-and-hostname">
-<h3>First, change the password and hostname<a class="headerlink" href="#first-change-the-password-and-hostname" title="Permalink to this headline">¶</a></h3>
-<p>Enter <code class="docutils literal notranslate"><span class="pre">sudo</span> <span class="pre">raspi-config</span></code>, use the arrow keys and enter to enter the network sub-menu. Change the Hostname something relevant (make sure to make a note). Wait then enter the Interfacing options and enable <strong>I2C</strong></p>
-<p>First just make sure the dependencies are installed
-<code class="docutils literal notranslate"><span class="pre">sudo</span> <span class="pre">apt</span> <span class="pre">update</span> <span class="pre">&amp;&amp;</span> <span class="pre">sudo</span> <span class="pre">apt</span> <span class="pre">install</span> <span class="pre">python3</span> <span class="pre">python3-pip</span> <span class="pre">screen</span></code></p>
-<p>Next clone the code into Raspberry Pi’s home directory
-<code class="docutils literal notranslate"><span class="pre">git</span> <span class="pre">clone</span> <span class="pre">https://github.com/Fallstop/GSheetBells.git</span></code></p>
+<p>First, configure the operating system
+Enter <code class="docutils literal notranslate"><span class="pre">sudo</span> <span class="pre">raspi-config</span></code>, use the arrow keys and enter to enter the network sub-menu. Change the Hostname something relevant (make sure to make a note). Wait then enter the Interfacing options and enable <strong>I2C</strong>. Once that is done, the last thing to do in these settings is in the boot menu You can then exit raspi-config.
+Next you want to change the name of the default user by executing <code class="docutils literal notranslate"><span class="pre">sudo</span> <span class="pre">passwd</span></code>, and follow the prompts.</p>
+<p>Next just make sure the dependencies are installed. (It may take some time)</p>
+<p><code class="docutils literal notranslate"><span class="pre">sudo</span> <span class="pre">apt</span> <span class="pre">update</span> <span class="pre">&amp;&amp;</span> <span class="pre">sudo</span> <span class="pre">apt</span> <span class="pre">install</span> <span class="pre">python3</span> <span class="pre">python3-pip</span> <span class="pre">screen</span> <span class="pre">nano</span></code></p>
+<p>After the dependencies are installed, clone the code into Raspberry Pi’s home directory:
+<code class="docutils literal notranslate"><span class="pre">git</span> <span class="pre">clone</span> <span class="pre">https://github.com/Fallstop/GSheetBells.git</span></code>
+Then configure permissions</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">chmod</span> <span class="o">+</span><span class="n">x</span> <span class="n">GSheetBells</span><span class="o">/</span><span class="n">BellRinger</span><span class="o">.</span><span class="n">sh</span>
+<span class="n">chmod</span> <span class="o">+</span><span class="n">x</span> <span class="n">GSheetBells</span><span class="o">/</span><span class="n">InternetStatus</span><span class="o">.</span><span class="n">sh</span>
+<span class="n">chmod</span> <span class="o">+</span><span class="n">x</span> <span class="n">GSheetBells</span><span class="o">/</span><span class="n">StartScripts</span><span class="o">.</span><span class="n">sh</span>
+</pre></div>
 </div>
+<p>Nice, time to set up the auto start.
+For this, we are going to use <a class="reference external" href="https://www.gnu.org/software/screen/">Screen</a>, which allows us to have sessions running in the background that can be connected to.
+<code class="docutils literal notranslate"><span class="pre">nano</span> <span class="pre">~/.profile</span></code>
+In the file, scroll down to the bottom using arrow keys and add to the bottem ./</p>
 </div>
 </div>
 

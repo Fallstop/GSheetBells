@@ -2,4 +2,4 @@
 Huanui Collage bell controller devlopment,
 this is a personal project.
 
-This is going to running on a raspberry pi 2 (Beacuse I had one lying around)
+To do this yourself, you can find the in work documentation [here](https://hcbellspython.readthedocs.io/en/latest/)
