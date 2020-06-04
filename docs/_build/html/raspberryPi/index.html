@@ -157,7 +157,7 @@ You also need the SD card to act as the system drive.</p>
 <p class="admonition-title">Note</p>
 <p>If you get stuck anywhere on this section, Search engines, like Google, is your friend and will have the answer if you look hard enough.</p>
 </div>
-<a class="reference internal image-reference" href="../_images/Raspberry-Pi-2-Bare.png"><img alt="../_images/Raspberry-Pi-2-Bare.png" class="align-center" src="../_images/Raspberry-Pi-2-Bare.png" style="width: 50%;" /></a>
+<a class="reference internal image-reference" href="../_images/Raspberry-Pi-2-Bare172.png"><img alt="../_images/Raspberry-Pi-2-Bare172.png" class="align-center" src="../_images/Raspberry-Pi-2-Bare172.png" style="width: 50%;" /></a>
 <div class="section" id="installing-raspbian">
 <h2>Installing Raspbian<a class="headerlink" href="#installing-raspbian" title="Permalink to this headline">¶</a></h2>
 <p>Go follow this <a class="reference external" href="https://www.raspberrypi.org/documentation/installation/installing-images/">guide</a> to create a bootable raspbian sd card. Install Raspberry Pi OS Lite, (under the <cite>Raspberry Pi OS Other</cite> tab in there software).</p>
@@ -165,17 +165,22 @@ You also need the SD card to act as the system drive.</p>
 </div>
 <div class="section" id="configuring-the-pi-for-operation">
 <h2>Configuring the Pi for operation<a class="headerlink" href="#configuring-the-pi-for-operation" title="Permalink to this headline">¶</a></h2>
-<p>First, we need to connect. Plug in the Raspberry Pi into ethernet. Next on another computer that is on the same network, open a terminal (It’s called command line on windows) and try running <code class="docutils literal notranslate"><span class="pre">ssh</span> <span class="pre">pi&#64;raspberrypi</span></code> to open a remote session to the Raspberry Pi. The default password <code class="docutils literal notranslate"><span class="pre">raspberry</span></code> which we will change soon.</p>
+<p>First, we need to connect. Plug in the Raspberry Pi into ethernet. Next on another computer that is on the same network, open a terminal (It’s called command line on windows) and try running <code class="docutils literal notranslate"><span class="pre">ssh</span> <span class="pre">pi&#64;raspberrypi</span></code> to open a remote session to the Raspberry Pi. The default password <cite>raspberry</cite> which we will change soon.</p>
 <div class="admonition note">
 <p class="admonition-title">Note</p>
 <p>If this dose not work, then make sure the ethernet is plugged in properly and if it still dose not work, plug in a monitor and keyboard, log in, and run ‘’ip address’’ to find the ip address, then try again on the other computer: <code class="docutils literal notranslate"><span class="pre">ssh</span> <span class="pre">pi&#64;[Ip</span> <span class="pre">address</span> <span class="pre">here]</span></code>. If all fails, run the next commands manually and enable manually in the <cite>raspi-config -&gt; Interfacing options</cite> menu.</p>
 </div>
-<p>First, configure the operating system
-Enter <code class="docutils literal notranslate"><span class="pre">sudo</span> <span class="pre">raspi-config</span></code>, use the arrow keys and enter to enter the network sub-menu. Change the Hostname something relevant (make sure to make a note). Wait then enter the Interfacing options and enable <strong>I2C</strong>. Once that is done, the last thing to do in these settings is in the boot menu You can then exit raspi-config.
-Next you want to change the name of the default user by executing <code class="docutils literal notranslate"><span class="pre">sudo</span> <span class="pre">passwd</span></code>, and follow the prompts.</p>
-<p>Next just make sure the dependencies are installed. (It may take some time)</p>
-<p><code class="docutils literal notranslate"><span class="pre">sudo</span> <span class="pre">apt</span> <span class="pre">update</span> <span class="pre">&amp;&amp;</span> <span class="pre">sudo</span> <span class="pre">apt</span> <span class="pre">install</span> <span class="pre">python3</span> <span class="pre">python3-pip</span> <span class="pre">screen</span> <span class="pre">nano</span></code></p>
-<p>After the dependencies are installed, clone the code into Raspberry Pi’s home directory:
+<p>First, configure the operating system by running:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">sudo</span> <span class="n">raspi</span><span class="o">-</span><span class="n">config</span>
+</pre></div>
+</div>
+<p>Use the arrow keys and enter to enter the network sub-menu. Change the Hostname something relevant (make sure to make a note). Wait then enter the Interfacing options and enable <strong>I2C</strong>. Once that is done, the last thing to do in these settings is in the <code class="docutils literal notranslate"><span class="pre">Boot</span> <span class="pre">Options</span></code> -&gt; <code class="docutils literal notranslate"><span class="pre">Desktop</span> <span class="pre">/</span> <span class="pre">CLI</span> <span class="pre">menu</span></code> select <code class="docutils literal notranslate"><span class="pre">B1</span> <span class="pre">Console</span> <span class="pre">Autologin</span></code> You can then exit raspi-config.
+Next you want to change the name of the default user by executing</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">sudo</span> <span class="n">passwd</span>
+</pre></div>
+</div>
+<p>and following the prompts.</p>
+<p>Next clone the code into Raspberry Pi’s home directory
 <code class="docutils literal notranslate"><span class="pre">git</span> <span class="pre">clone</span> <span class="pre">https://github.com/Fallstop/GSheetBells.git</span></code>
 Then configure permissions</p>
 <div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">chmod</span> <span class="o">+</span><span class="n">x</span> <span class="n">GSheetBells</span><span class="o">/</span><span class="n">BellRinger</span><span class="o">.</span><span class="n">sh</span>
@@ -183,10 +188,24 @@ Then configure permissions</p>
 <span class="n">chmod</span> <span class="o">+</span><span class="n">x</span> <span class="n">GSheetBells</span><span class="o">/</span><span class="n">StartScripts</span><span class="o">.</span><span class="n">sh</span>
 </pre></div>
 </div>
+<p>After that, install the dependencies using this command:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">sudo</span> <span class="n">apt</span> <span class="n">update</span> <span class="o">&amp;&amp;</span> <span class="n">sudo</span> <span class="n">apt</span> <span class="n">install</span> <span class="n">python3</span> <span class="n">python3</span><span class="o">-</span><span class="n">pip</span> <span class="n">screen</span> <span class="o">&amp;&amp;</span>
+<span class="n">cd</span> <span class="n">GSheetBells</span> <span class="o">&amp;&amp;</span> <span class="n">sudo</span> <span class="n">pip</span> <span class="n">install</span> <span class="o">-</span><span class="n">r</span> <span class="n">requirements</span><span class="o">.</span><span class="n">txt</span> <span class="o">&amp;&amp;</span>
+<span class="n">cd</span> <span class="o">..</span>
+</pre></div>
+</div>
+<div class="admonition note">
+<p class="admonition-title">Note</p>
+<p>This will take ages.</p>
+</div>
 <p>Nice, time to set up the auto start.
 For this, we are going to use <a class="reference external" href="https://www.gnu.org/software/screen/">Screen</a>, which allows us to have sessions running in the background that can be connected to.
 <code class="docutils literal notranslate"><span class="pre">nano</span> <span class="pre">~/.profile</span></code>
-In the file, scroll down to the bottom using arrow keys and add to the bottem ./</p>
+In the file, scroll down to the bottom using arrow keys and this add to the bottom</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="o">./</span><span class="n">StartScripts</span><span class="o">.</span><span class="n">sh</span>
+</pre></div>
+</div>
+<p>Cool, that’s everything you need to do for now</p>
 </div>
 </div>
 

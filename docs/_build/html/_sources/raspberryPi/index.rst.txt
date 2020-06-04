@@ -20,19 +20,20 @@ Now with the operating system on the SD card, place a file name ``ssh`` with no 
 Configuring the Pi for operation
 --------------------------------
 
-First, we need to connect. Plug in the Raspberry Pi into ethernet. Next on another computer that is on the same network, open a terminal (It's called command line on windows) and try running ``ssh pi@raspberrypi`` to open a remote session to the Raspberry Pi. The default password ``raspberry`` which we will change soon.
+First, we need to connect. Plug in the Raspberry Pi into ethernet. Next on another computer that is on the same network, open a terminal (It's called command line on windows) and try running ``ssh pi@raspberrypi`` to open a remote session to the Raspberry Pi. The default password `raspberry` which we will change soon.
 
 .. note::  If this dose not work, then make sure the ethernet is plugged in properly and if it still dose not work, plug in a monitor and keyboard, log in, and run ''ip address'' to find the ip address, then try again on the other computer: ``ssh pi@[Ip address here]``. If all fails, run the next commands manually and enable manually in the `raspi-config -> Interfacing options` menu.
 
-First, configure the operating system
-Enter ``sudo raspi-config``, use the arrow keys and enter to enter the network sub-menu. Change the Hostname something relevant (make sure to make a note). Wait then enter the Interfacing options and enable **I2C**. Once that is done, the last thing to do in these settings is in the boot menu You can then exit raspi-config.
-Next you want to change the name of the default user by executing ``sudo passwd``, and follow the prompts.
+First, configure the operating system by running:
+:: 
+    sudo raspi-config
+Use the arrow keys and enter to enter the network sub-menu. Change the Hostname something relevant (make sure to make a note). Wait then enter the Interfacing options and enable **I2C**. Once that is done, the last thing to do in these settings is in the ``Boot Options`` -> ``Desktop / CLI menu`` select ``B1 Console Autologin`` You can then exit raspi-config.
+Next you want to change the name of the default user by executing 
+::
+    sudo passwd
+and following the prompts.
 
-Next just make sure the dependencies are installed. (It may take some time)
-
-``sudo apt update && sudo apt install python3 python3-pip screen nano``
-
-After the dependencies are installed, clone the code into Raspberry Pi's home directory:
+Next clone the code into Raspberry Pi's home directory
 ``git clone https://github.com/Fallstop/GSheetBells.git``
 Then configure permissions
 ::
@@ -41,7 +42,19 @@ Then configure permissions
     chmod +x GSheetBells/StartScripts.sh
 
 
+After that, install the dependencies using this command:
+::
+    sudo apt update && sudo apt install python3 python3-pip screen &&
+    cd GSheetBells && sudo pip install -r requirements.txt &&
+    cd ..
+
+.. note:: This will take ages.
+
 Nice, time to set up the auto start.
 For this, we are going to use `Screen <https://www.gnu.org/software/screen/>`_, which allows us to have sessions running in the background that can be connected to.
 ``nano ~/.profile``
-In the file, scroll down to the bottom using arrow keys and add to the bottem ./
+In the file, scroll down to the bottom using arrow keys and this add to the bottom 
+::
+    ./StartScripts.sh
+
+Cool, that's everything you need to do for now

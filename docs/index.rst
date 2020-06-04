@@ -11,13 +11,15 @@ Stages
  - :doc:`Wiring up the case<wiring/index>`
  - :doc:`Setting up google sheets<googleSheets/index>`
 
+Yes
+
 .. toctree::
    :maxdepth: 2
-   :caption: Contents:
+
    raspberrypi/index
+   googleSheets/index
+   case/index
+   wiring/index
 
-
-Indices and tables
-==================
 
 
