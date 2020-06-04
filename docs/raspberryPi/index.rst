@@ -28,11 +28,7 @@ First, configure the operating system
 Enter ``sudo raspi-config``, use the arrow keys and enter to enter the network sub-menu. Change the Hostname something relevant (make sure to make a note). Wait then enter the Interfacing options and enable **I2C**. Once that is done, the last thing to do in these settings is in the boot menu You can then exit raspi-config.
 Next you want to change the name of the default user by executing ``sudo passwd``, and follow the prompts.
 
-Next just make sure the dependencies are installed. (It may take some time)
-
-``sudo apt update && sudo apt install python3 python3-pip screen nano``
-
-After the dependencies are installed, clone the code into Raspberry Pi's home directory:
+Next clone the code into Raspberry Pi's home directory
 ``git clone https://github.com/Fallstop/GSheetBells.git``
 Then configure permissions
 ::
@@ -41,6 +37,12 @@ Then configure permissions
     chmod +x GSheetBells/StartScripts.sh
 
 
+After that, install the dependencies are installed
+
+    sudo apt update && sudo apt install python3 python3-pip screen
+    cd GSheetBells && sudo pip install -r requirements.txt
+
+    
 Nice, time to set up the auto start.
 For this, we are going to use `Screen <https://www.gnu.org/software/screen/>`_, which allows us to have sessions running in the background that can be connected to.
 ``nano ~/.profile``
