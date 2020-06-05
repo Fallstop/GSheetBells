@@ -53,8 +53,9 @@ After that, install the dependencies using this command:
 
 ::
 
-    sudo apt update && sudo apt install python3 python3-pip screen &&
-    cd GSheetBells && sudo pip install -r requirements.txt && cd ..
+    sudo apt update && sudo apt upgrade && 
+    sudo apt install python3 python3-pip screen &&
+    sudo pip install -r GSheetBells/requirements.txt
 
 .. note:: This will take ages.
 
