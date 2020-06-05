@@ -1,5 +1,5 @@
-# HCBellsPython
-Huanui Collage bell controller devlopment,
+# Google Sheet Bells
+Huanui Collage bell controller development,
 this is a personal project.
 
-To do this yourself, you can find the in work documentation [here](https://hcbellspython.readthedocs.io/en/latest/)
+To do this yourself, you can find the in work documentation [here](https://gsheetbells.readthedocs.io)

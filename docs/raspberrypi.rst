@@ -60,11 +60,26 @@ After that, install the dependencies using this command:
 
 Nice, time to set up the auto start.
 For this, we are going to use `Screen <https://www.gnu.org/software/screen/>`_, which allows us to have sessions running in the background that can be connected to.
-``nano ~/.profile``
-In the file, scroll down to the bottom using arrow keys and this add to the bottom 
+Edit the start processes by running
 
 ::
 
-    ./StartScripts.sh
+    sudo nano /lib/systemd/system/HCBell.service
+
+Now paste in this piece of code
+
+::
+
+    [Unit]
+    Description=Startup of Google Sheet bell ringer
+    After=boot-complete.target
+
+    [Service]
+    WorkingDirectory=/
+    ExecStart=/home/pi/Documents/HCBellsPython/StartScripts.sh
+
+    [Install]
+    WantedBy=boot-complete.target
+
 
 Cool, that's everything you need to do for now
