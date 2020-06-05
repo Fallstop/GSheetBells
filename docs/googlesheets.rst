@@ -12,15 +12,18 @@ Follow this link - https://bit.ly/GSheetBellTemplate and make a copy
 
 You can have an explore how it works, but the time inputs are next:
 
-Rules for time formatting
+Layout and Rules
 -------------------------
 
-Must be a 4 characters long, 24 hour and be separated by a colon
+Their is a few custom scripts and formatting in the google sheet that you copied
 
-:EG:
+ - The bell times on the main page (``MainTUI``) are taken, sorted and made more machine friendly and placed onto the ``DataSorted`` page. This process means you can have gaps in your bells and have them in any order. This is done through the use of named ranges. This can sometimes be mucked up by cutting and pasting, so if the second page is missing bells, make sure the Named Ranges look like they cover the range (They are under Data menu).
 
-| 8:45 am: ``08:45``
-| 2:30 pm: ``15:30``
+ - There is a hash script that supplies a hashing function used in the ``DataSorted`` page. It produces a hash that the Raspberry pi uses to work out if anything has changed to it's local copy (To reduce the number of writes to the SD card and chance of a corrupted local copy)
+
+ - The bell registering area is capped to the space for a  thousand bells, that number is arbitrary but the sensing area has to be capped somewhere. If you want to extend this, you can by moving the hash cap down to where you want it and updating the Named Ranges from ending at 1000, to ending at your new end.
+
+ - The bell times them selfs must be a 4 characters long, 24 hour and be separated by a colon. EG: 8:45 am: ``08:45`` | 2:30 pm: ``15:30``
 
 Google Cloud Platform
 ---------------------
@@ -36,10 +39,30 @@ Download the `Repository <https://github.com/Fallstop/GSheetBells>`_ by either C
 
 Open a Terminal (Command Line in windows) and cd to the location of the Local Repository. Make sure you have python3/pip installed and run:
 
-:With Windows\, use python/pip instead of python3/pip3:
+.. note:: With Windows\, use python/pip command instead of python3/pip3
 
 ::
 
     pip3 install -r requirements.txt
 
 While that is installing, you can place the credentials you downloaded earlier into the Python folder in the Repository and fill out the config file in the same folder.
+
+Once both are done, run the script in the Python folder
+
+::
+
+    cd Python
+    python3 BellRinger.py
+
+It will take a bit to load, then it will open a webpage for you to authenticate it with the google account which has the Google Sheet. Check it has an error, if it dose, check your config.py is correct. If it works, your good to go.
+
+Now we need to put the ``config.py`` and the new ``token.pickle`` onto the Raspberry Pi. You can do this how you normally do this kind of thing, or you can take the SD card out of the Raspberry Pi and Dump it into the ``home/pi/GSheetBells/Python/`` folder.
+
+Time to test it!
+
+::
+
+    cd ~/GSheetBells/Python
+    python3 BellRinger.py
+
+Sample Output

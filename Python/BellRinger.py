@@ -197,7 +197,12 @@ def retriveBellTimesOnline(): #From Google Sheets
 currentHash = getOfflineHash()
 print("Hash Stored:", currentHash)
 OldTime = GetTime()
-bellTimes = getOfflineBellTimes() #Placeholder that won't error or ring
+print("Loading Belltimes")
+try:
+    bellTimes = retriveBellTimesOnline()
+except Exception as e:
+    print("Online system failure, using offline Backup.\nError:",e)
+    bellTimes = getOfflineBellTimes()
 
 print("Bell Ringer Started")
 #Main bell check loop
