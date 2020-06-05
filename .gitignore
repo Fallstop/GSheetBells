@@ -4,4 +4,6 @@ docs/build/*
 docs/_build/*
 Python/config.py
 .vscode
+Python/offlineBellBackup/hash.txt
+Python/offlineBellBackup/normAllDays.csv
 __pycache__
