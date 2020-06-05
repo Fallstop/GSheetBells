@@ -56,7 +56,12 @@ Once both are done, run the script in the Python folder
 
 It will take a bit to load, then it will open a webpage for you to authenticate it with the google account which has the Google Sheet. Check it has an error, if it dose, check your config.py is correct. If it works, your good to go.
 
-Now we need to put the ``config.py`` and the new ``token.pickle`` onto the Raspberry Pi. You can do this how you normally do this kind of thing, or you can take the SD card out of the Raspberry Pi and Dump it into the ``home/pi/GSheetBells/Python/`` folder.
+Now we need to put the ``config.py`` and ```credentials.json`` onto the Raspberry Pi. You can do this how you normally do this kind of thing, or you can take the SD card out of the Raspberry Pi and Dump it into the ``home/pi/GSheetBells/Python/`` folder.
+You can also do it via scp (If you have it installed), it would look like this:
+
+::
+
+    scp ./token.pickle pi@HostnameHere:~/GSheetBells/Python/token.pickle
 
 Time to test it!
 
@@ -66,3 +71,6 @@ Time to test it!
     python3 BellRinger.py
 
 Sample Output
+
+::
+

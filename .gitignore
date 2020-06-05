@@ -2,5 +2,6 @@ credentials.*
 token.*
 docs/build/*
 docs/_build/*
+Python/config.py
 .vscode
 __pycache__

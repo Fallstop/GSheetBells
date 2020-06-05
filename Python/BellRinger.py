@@ -94,6 +94,7 @@ def CheckBell(checkChanges):
             print("Proberly No Internet!")
             print("Using offline backup!")
             bellTimes = getOfflineBellTimes()
+    print("Belltimes",bellTimes)
     bellTimesDF = pd.DataFrame(bellTimes)
     bellDayTimes = bellTimesDF.fillna(0.0).iloc[:,datetime.datetime.today().weekday()].values.tolist()
     print("Bell day times",bellDayTimes)
