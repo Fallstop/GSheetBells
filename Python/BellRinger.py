@@ -1,5 +1,6 @@
 import time
 import datetime
+import config #TheConfigFile
 print ("Bellringer startup, time:",str(datetime.datetime.now())[:-7])
 import pandas as pd
 import numpy as np
@@ -67,7 +68,7 @@ def RingBell():
     print("Ringing Bell")
     try:
         GPIO.output(12,GPIO.HIGH)
-        time.sleep(0.5)
+        time.sleep(config.RingTime)
         GPIO.output(12,GPIO.LOW)
     except:
         print("GPIO OFF, Ring Ring?")
@@ -122,7 +123,7 @@ def retriveBellTimesOnline(): #From Google Sheets
     global bellTimes
     # If modifying these scopes, delete the file token.pickle.
     SCOPES = ['https://www.googleapis.com/auth/spreadsheets.readonly']
-    SPREADSHEET_ID = '1JmhFI1zfQ7La_QXS8TCnj1R6B8r_KNLe8jk24eF6E64'
+    SPREADSHEET_ID = config.SPREADSHEET_ID
     
     day = datetime.datetime.today().weekday()
     RangeName = "timeDataAPI"
@@ -203,10 +204,7 @@ print("Bell Ringer Started")
 while True:
     Time = GetTime()
     if OldTime != Time:
-        if (int(Time[3:])+1)%15==0:
-            CheckBell(checkChanges = True)
-        else:
-            CheckBell(checkChanges = False)
+        CheckBell(checkChanges = ((int(Time[3:])+config.MinutesBeforeToCheck)%config.MinutesBetweenSheetCheck==0))
         OldTime = GetTime()
     time.sleep(1)
 

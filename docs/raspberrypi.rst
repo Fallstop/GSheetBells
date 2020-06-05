@@ -64,22 +64,13 @@ Edit the start processes by running
 
 ::
 
-    sudo nano /lib/systemd/system/GSheetBell.service
+    sudo nano /etc/profile
 
-Now paste in this piece of code
+and adding this to the end:
 
 ::
 
-    [Unit]
-    Description=Startup of Google Sheet bell ringer
-    After=boot-complete.target
-
-    [Service]
-    WorkingDirectory=/
-    ExecStart=/home/pi/GSheetBells/StartScripts.sh
-
-    [Install]
-    WantedBy=boot-complete.target
-
+    cd ~
+    sh /home/pi/GSheetBells/StartScripts.sh
 
 Cool, Next up is setting up Google Sheets
