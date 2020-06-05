@@ -1,4 +1,4 @@
 #!/bin/bash
 
-cd ~/Documents/HCBellsPython/
+cd ~/GSheetBells
 python rpi-internet-monitor.py

@@ -64,7 +64,7 @@ Edit the start processes by running
 
 ::
 
-    sudo nano /lib/systemd/system/HCBell.service
+    sudo nano /lib/systemd/system/GSheetBell.service
 
 Now paste in this piece of code
 
@@ -76,10 +76,10 @@ Now paste in this piece of code
 
     [Service]
     WorkingDirectory=/
-    ExecStart=/home/pi/Documents/HCBellsPython/StartScripts.sh
+    ExecStart=/home/pi/GSheetBells/StartScripts.sh
 
     [Install]
     WantedBy=boot-complete.target
 
 
-Cool, that's everything you need to do for now
+Cool, Next up is setting up Google Sheets

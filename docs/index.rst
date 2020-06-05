@@ -1,11 +1,11 @@
 
 
-Welcome to GSheetBells's documentation!
+Welcome to GSheetBell's documentation!
 =======================================
 
 .. toctree::
    :maxdepth: 2
-   :caption: Contents:
+   :caption: Sections:
 
    raspberrypi
    googlesheets

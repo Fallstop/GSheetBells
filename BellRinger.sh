@@ -1,4 +1,4 @@
 #!/bin/bash
 
-cd ~/Documents/HCBellsPython/Python/
+cd ~/GSheetBells/Python/
 python3 CrashFixerBellRinger.py
