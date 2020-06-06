@@ -86,7 +86,7 @@ def CheckBell(checkChanges):
         print("Atempting to check for changes")
         try: #Try get the online Version
             bellTimesTemp = retriveBellTimesOnline() #First position is the config for how long to ring, rest are belltimes
-            if bellTimesTemp:
+            if bellTimesTemp != False:
                 print(bellTimesTemp)
                 bellTimes = bellTimesTemp
         except Exception as e:
@@ -199,11 +199,11 @@ currentHash = getOfflineHash()
 print("Hash Stored:", currentHash)
 OldTime = GetTime()
 print("Loading Belltimes")
+bellTimes = getOfflineBellTimes()
 try:
     bellTimes = retriveBellTimesOnline()
 except Exception as e:
     print("Online system failure, using offline Backup.\nError:",e)
-    bellTimes = getOfflineBellTimes()
 
 print("Bell Ringer Started")
 #Main bell check loop
