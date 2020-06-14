@@ -23,4 +23,6 @@ Assembly
 .. note:: Make sure to remove any support
 
 If you have goon for a custom case, well done, and you should prepare the case how you planed.
-Otherwise, you should no that the screws on the top lid is M5 and it doesn't matter how long they are. A optional decouration is to paint the letters on the top and sides
+Otherwise, you should no that the screws on the top lid is M5 and it doesn't matter how long they are. A optional decoration is to paint the letters on the top and sides.
+
+Putting all the connected wires and boards should be pretty easy, make sure you get the LED's in the right holes, and the raspberry pi ethernet port 
