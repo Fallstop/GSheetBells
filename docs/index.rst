@@ -18,6 +18,7 @@ Rough Materials:
  - Momentary switch, normal switch
  - led's red + green + suitable resistors
  - Relay suited for your existing Bell System (Or tone generator if you have to, but it is not officially supported)
+ - USB power for the Raspberry Pi + Ethernet cable
 
 
 .. toctree::

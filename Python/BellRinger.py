@@ -221,4 +221,3 @@ while True:
         CheckBell(checkChanges = checkForChanges) #Rings the bell on the correct time, also manages updating the bellTimes
         timeLastCheck = GetTime()
     time.sleep(1) #Avoid spaming system resources
-
