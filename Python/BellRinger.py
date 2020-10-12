@@ -72,8 +72,9 @@ def RingBell():
         GPIO.output(12,GPIO.HIGH)
         time.sleep(config.RingTime)
         GPIO.output(12,GPIO.LOW)
-    except:
+    except Exception as e:
         print("GPIO OFF, Ring Ring?")
+        print("Error:",e)
         time.sleep(7)
     print("Stoped Ringing Bell")
     print()
