@@ -25,6 +25,8 @@ Their is a few custom scripts and formatting in the google sheet that you copied
 
  - The bell times them selfs must be a 4 characters long, 24 hour and be separated by a colon. EG: 8:45 am: ``08:45`` | 2:30 pm: ``15:30``
 
+You can add in your bell times now, if you want.
+
 Google Cloud Platform
 ---------------------
 If you have used GCloud before, you can skip this little section.
@@ -74,3 +76,9 @@ Sample Output
 
 ::
 
+    Output here (Need to run on desktop)
+
+
+If all works, then good, if it doesn't and you get a error message you can't work out, then good luck.
+
+That is all you need to do for setting up Google Sheets!

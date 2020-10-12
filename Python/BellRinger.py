@@ -9,16 +9,18 @@ import os.path
 from googleapiclient.discovery import build
 from google_auth_oauthlib.flow import InstalledAppFlow
 from google.auth.transport.requests import Request
-try:
-    import RPi.GPIO as GPIO
-    GPIO.setmode(GPIO.BOARD)
-    GPIO.setwarnings(False)
-    GPIO.setup(12,GPIO.OUT)
-    print("GPIO initiated")
-except:
-    print("GPIO off")
 
-def getOfflineHash():
+def StartGPIO():
+    try:
+        import RPi.GPIO as GPIO
+        GPIO.setmode(GPIO.BOARD)
+        GPIO.setwarnings(False)
+        GPIO.setup(12,GPIO.OUT)
+        print("GPIO initiated")
+    except:
+        print("GPIO off")
+
+def GetOfflineHash():
     try:
         hashFile = open("offlineBellBackup/hash.txt","r")
         hashText = hashFile.read()
@@ -26,7 +28,7 @@ def getOfflineHash():
         return(hashText)
     except:
         return("HashNotFound")
-def writeOfflineHash(hashText):
+def WriteOfflineHash(hashText):
     try:
         hashFile = open("offlineBellBackup/hash.txt","w+")
         hashFile.write(hashText)
@@ -34,7 +36,7 @@ def writeOfflineHash(hashText):
         return("Saved hash")
     except Exception as e:
         return("Hash save failed",e)
-def writeOfflineBellTimes(bellTimes):
+def WriteOfflineBellTimes(bellTimes):
     #Used if new bell times are found
     try:
         csv = pd.DataFrame.from_dict(bellTimes)
@@ -44,7 +46,7 @@ def writeOfflineBellTimes(bellTimes):
     except Exception as e:
         print("Write file exception on bell time backup")
         print(e)
-def getOfflineBellTimes():
+def RetriveBellTimesOffline():
     #Used on start up to get back up
     try:
         bellTimesArray = []
@@ -83,17 +85,17 @@ def CheckBell(checkChanges):
     currentTime = GetTime()
     print("Current time:",currentTime)
     if checkChanges:
-        print("Atempting to check for changes")
+        print("Attempting to check for changes")
         try: #Try get the online Version
-            bellTimesTemp = retriveBellTimesOnline() #First position is the config for how long to ring, rest are belltimes
+            bellTimesTemp = RetriveBellTimesOnline() #First position is the config for how long to ring, rest are belltimes
             if bellTimesTemp != False:
                 print(bellTimesTemp)
                 bellTimes = bellTimesTemp
         except Exception as e:
             print("Failed to get updated sheet, Exception:",e)
-            print("Proberly No Internet!")
+            print("Probably No Internet!")
             print("Using offline backup!")
-            bellTimes = getOfflineBellTimes()
+            bellTimes = RetriveBellTimesOffline()
     print("Belltimes",bellTimes)
     bellTimesDF = pd.DataFrame(bellTimes)
     bellDayTimes = bellTimesDF.fillna(0.0).iloc[:,datetime.datetime.today().weekday()].values.tolist()
@@ -115,7 +117,7 @@ def CheckBell(checkChanges):
     print("Did not find a match")
     print()
     return()
-def retriveBellTimesOnline(): #From Google Sheets
+def RetriveBellTimesOnline(): #From Google Sheets
     #############
     #SETUP
     #############
@@ -125,8 +127,7 @@ def retriveBellTimesOnline(): #From Google Sheets
     # If modifying these scopes, delete the file token.pickle.
     SCOPES = ['https://www.googleapis.com/auth/spreadsheets.readonly']
     SPREADSHEET_ID = config.SPREADSHEET_ID
-    
-    day = datetime.datetime.today().weekday()
+
     RangeName = "timeDataAPI"
     print(RangeName)
     creds = None
@@ -182,9 +183,9 @@ def retriveBellTimesOnline(): #From Google Sheets
                     for row in values:
                         bellTimes.append(row)
                     print("Hash:",currentHash)
-                    print(writeOfflineHash(currentHash))
+                    print(WriteOfflineHash(currentHash))
                     print(bellTimes)
-                    writeOfflineBellTimes(bellTimes) #Update Backup
+                    WriteOfflineBellTimes(bellTimes) #Update Backup
                     print()
                     return(bellTimes)
 
@@ -192,25 +193,31 @@ def retriveBellTimesOnline(): #From Google Sheets
         
         
 
-#Main code (Made entirely out of functions)
+#This is the main driver code with all the hundreds of utility lines extracted away
 
-#Initial
-currentHash = getOfflineHash()
+#Initialization
+StartGPIO()
+currentHash = GetOfflineHash() #Gets the stored hash
 print("Hash Stored:", currentHash)
-OldTime = GetTime()
+timeLastCheck = GetTime()
 print("Loading Belltimes")
-bellTimes = getOfflineBellTimes()
-try:
-    bellTimes = retriveBellTimesOnline()
+bellTimes = RetriveBellTimesOffline() #Gets the stored belltimes as a backup
+try: #Attempts check the bell times with the Google Sheet
+    bellTimesTemp = RetriveBellTimesOnline()
+    if bellTimesTemp != False: #If there is a new set of belltimes ready, save the new belltimes
+        bellTimes = bellTimesTemp
+        WriteOfflineBellTimes(bellTimes)
 except Exception as e:
     print("Online system failure, using offline Backup.\nError:",e)
 
 print("Bell Ringer Started")
-#Main bell check loop
-while True:
-    Time = GetTime()
-    if OldTime != Time:
-        CheckBell(checkChanges = ((int(Time[3:])+config.MinutesBeforeToCheck)%config.MinutesBetweenSheetCheck==0))
-        OldTime = GetTime()
-    time.sleep(1)
 
+#Main loop
+while True:
+    Time = GetTime() #GetTime gets the time in hh:mm format
+    if timeLastCheck != Time: #Only run once a minute
+        #Decides when to check against the online copy
+        checkForChanges = ((int(Time[3:])+config.MinutesBeforeToCheck)%config.MinutesBetweenSheetCheck==0)
+        CheckBell(checkChanges = checkForChanges) #Rings the bell on the correct time, also manages updating the bellTimes
+        timeLastCheck = GetTime()
+    time.sleep(1) #Avoid spaming system resources
