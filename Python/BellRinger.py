@@ -10,15 +10,15 @@ from googleapiclient.discovery import build
 from google_auth_oauthlib.flow import InstalledAppFlow
 from google.auth.transport.requests import Request
 
-def StartGPIO():
-    try:
-        import RPi.GPIO as GPIO
-        GPIO.setmode(GPIO.BOARD)
-        GPIO.setwarnings(False)
-        GPIO.setup(12,GPIO.OUT)
-        print("GPIO initiated")
-    except:
-        print("GPIO off")
+try:
+    import RPi.GPIO as GPIO
+    GPIO.setmode(GPIO.BOARD)
+    GPIO.setwarnings(False)
+    GPIO.setup(12,GPIO.OUT)
+    print("GPIO initiated")
+except:
+    print("GPIO off")
+    
 
 def GetOfflineHash():
     try:
@@ -197,7 +197,6 @@ def RetriveBellTimesOnline(): #From Google Sheets
 #This is the main driver code with all the hundreds of utility lines extracted away
 
 #Initialization
-StartGPIO()
 currentHash = GetOfflineHash() #Gets the stored hash
 print("Hash Stored:", currentHash)
 timeLastCheck = GetTime()
